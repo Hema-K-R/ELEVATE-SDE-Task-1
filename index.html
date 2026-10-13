@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CredVault — Certificate Portal</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" data-page="home" aria-label="CredVault home">CredVault</a>
+    <nav class="nav">
+      <a href="#" data-page="home">Home</a>
+      <a href="#" data-page="admin-login" id="admin-nav">Admin</a>
+      <a href="#" data-page="admin-login" id="logout-nav" class="hidden">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+    <!-- Home -->
+    <section class="page hero-page active" id="page-home">
+      <div class="hero">
+        <p class="eyebrow">DIGITAL CREDENTIALS, SIMPLIFIED</p>
+        <h1>Cred<span>Vault</span></h1>
+        <p class="hero-copy">The definitive platform for secure certificate issuance and verification.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" data-page="request">Request Certificate</button>
+          <button class="btn btn-secondary" data-page="track">Track Application</button>
+          <button class="btn btn-secondary" data-page="verify">Verify Certificate</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Request certificate -->
+    <section class="page" id="page-request">
+      <div class="panel form-panel">
+        <div class="panel-heading">
+          <span class="step-icon">01</span>
+          <div><h2>Request Certificate</h2><p>Submit your details to start a certificate request.</p></div>
+        </div>
+        <form id="request-form">
+          <label for="req-name">Full name</label>
+          <input id="req-name" name="name" placeholder="Enter your full name" required />
+          <label for="req-email">Email address</label>
+          <input id="req-email" name="email" type="email" placeholder="you@example.com" required />
+          <label>Gender</label>
+          <div class="radio-row">
+            <label class="radio-label"><input type="radio" name="gender" value="Male" required /> Male</label>
+            <label class="radio-label"><input type="radio" name="gender" value="Female" /> Female</label>
+            <label class="radio-label"><input type="radio" name="gender" value="Other" /> Other</label>
+          </div>
+          <label for="req-course">Course / program</label>
+          <input id="req-course" name="course" placeholder="e.g. Web Development" required />
+          <label for="req-date">Completion date</label>
+          <input id="req-date" name="date" type="date" required />
+          <button class="btn btn-primary btn-wide" type="submit">Submit Request <span>→</span></button>
+          <p class="form-note">Demo mode: this request is stored only in this browser session.</p>
+        </form>
+        <div id="request-result" class="result-box hidden" role="status"></div>
+      </div>
+    </section>
+
+    <!-- Track application -->
+    <section class="page" id="page-track">
+      <div class="panel compact-panel">
+        <div class="panel-heading centered-heading"><div><h2>Track Application</h2><p>Check the current status of your request.</p></div></div>
+        <form id="track-form">
+          <label for="track-id">Application ID</label>
+          <input id="track-id" placeholder="e.g. APP-2026-001" required />
+          <button class="btn btn-primary btn-wide" type="submit">Track Status</button>
+        </form>
+        <div id="track-result" class="result-box hidden" role="status"></div>
+      </div>
+    </section>
+
+    <!-- Admin login -->
+    <section class="page" id="page-admin-login">
+      <div class="panel compact-panel">
+        <div class="panel-heading centered-heading"><div><h2>Admin Login</h2><p>Sign in to manage applications and certificates.</p></div></div>
+        <form id="login-form">
+          <label for="admin-user">Username</label>
+          <input id="admin-user" placeholder="admin" autocomplete="username" required />
+          <label for="admin-password">Password</label>
+          <input id="admin-password" type="password" placeholder="Enter password" autocomplete="current-password" required />
+          <button class="btn btn-primary btn-wide" type="submit">Login</button>
+          <p class="form-note">Demo login: <strong>admin</strong> / <strong>admin123</strong></p>
+        </form>
+        <div id="login-error" class="inline-error hidden"></div>
+      </div>
+    </section>
+
+    <!-- Admin dashboard -->
+    <section class="page dashboard-page" id="page-dashboard">
+      <div class="dashboard-wrap">
+        <div class="dashboard-top">
+          <div><p class="eyebrow">CONTROL CENTER</p><h2>Admin Dashboard</h2><p class="muted">Review requests and manage issued credentials.</p></div>
+          <div class="tabs">
+            <button class="tab active" data-tab="applications">Applications <span id="application-count">3</span></button>
+            <button class="tab" data-tab="certificates">Certificates <span id="certificate-count">2</span></button>
+          </div>
+        </div>
+        <div class="table-shell" id="applications-table">
+          <div class="table-title"><div><h3>Certificate applications</h3><p>Review submitted requests</p></div><span class="live-dot">● LIVE DEMO</span></div>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Application ID</th><th>Name</th><th>Email</th><th>Course</th><th>Submitted</th><th>Status</th><th>Actions</th></tr></thead>
+              <tbody id="applications-body"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="table-shell hidden" id="certificates-table">
+          <div class="table-title"><div><h3>Issued certificates</h3><p>Credentials available for verification</p></div><span class="live-dot">● LIVE DEMO</span></div>
+          <div class="table-scroll">
+            <table>
+              <thead><tr><th>Certificate ID</th><th>Recipient</th><th>Course</th><th>Issue date</th><th>Status</th><th>Action</th></tr></thead>
+              <tbody id="certificates-body"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Verify -->
+    <section class="page" id="page-verify">
+      <div class="panel compact-panel verify-panel">
+        <div class="panel-heading centered-heading"><div><h2>Verify Certificate</h2><p>Confirm that a credential is authentic.</p></div></div>
+        <form id="verify-form">
+          <label for="certificate-id">Certificate ID</label>
+          <input id="certificate-id" placeholder="e.g. CERT-2026-001" required />
+          <button class="btn btn-primary btn-wide" type="submit">Verify Certificate</button>
+        </form>
+        <div id="verify-result" class="result-box hidden" role="status"></div>
+      </div>
+    </section>
+  </main>
+  <div id="toast" class="toast hidden" role="status"></div>
+  <footer>© 2026 CredVault <span>•</span> A secure digital credential experience</footer>
+  <script src="script.js"></script>
+</body>
+</html>
